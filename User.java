@@ -1,4 +1,4 @@
-public class User {
+public class User extends InformationSystem{
 
     protected String name;
     protected int id;
@@ -16,7 +16,8 @@ public class User {
       return false;
     }
     
-    public User(int idIn, String nameIn, String addressIn, int phoneNumIn, String emailIn) {
+    public User(String userTypeIn, String userNameIn, String passwordIn, int idIn, String nameIn, String addressIn, int phoneNumIn, String emailIn) {
+      super(userTypeIn, userNameIn, passwordIn);
       id = idIn;
       name = nameIn;
       address = addressIn;
