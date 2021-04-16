@@ -1,13 +1,25 @@
 public class InformationSystem {
    
    protected String userType;
-   protected String userName;
+   protected String username;
    protected String password;
    
-   public InformationSystem(String userTypeIn, String userNameIn, String passwordIn) {
+   public InformationSystem(String userTypeIn, String usernameIn, String passwordIn) {
       userType = userTypeIn;
-      userName = userNameIn;
+      username = usernameIn;
       password = passwordIn;
+   }
+   
+   public String getUserType() {
+      return userType;
+   }
+   
+   public String getUsername() {
+      return username;
+   }
+   
+   public String getPassword() {
+      return password;
    }
    
    public void login(String usernameIn, String passwordIn) {
