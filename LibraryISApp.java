@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LibraryISApp {
 
@@ -7,18 +8,12 @@ public class LibraryISApp {
    
       ArrayList<String> database = new ArrayList<String>(5);
       
-      // if registered, Bob will be in the database
-      InformationSystem Bob = new InformationSystem("Customer", "bob123", "12345678");
+      System.out.println("Hello! Welcome to the Group 7 Library System.");
+      System.out.println("Please enter your name and email address to get started.");
       
-      // check if Bob is in the library database
-      if (!database.contains(Bob)) {
-         System.out.println("You are not in the system. Please make an account.");
-      }
+      // check if user is in the library database
       
-      while (!database.contains(Bob)) {
-         
-      }
-      // if not, register
+      //if not, register
       
       // user will input username and password, will be given a 4 digit Library ID
       // system will notify user of ID assignment and whenever they are ready to check out
