@@ -2,8 +2,8 @@ public class Customer extends User {
 
    protected String creditCard;
    
-   public Customer(int idIn, String nameIn, String addressIn, int phoneNumIn, String emailIn, String creditCardIn) {
-      super(idIn, nameIn, addressIn, phoneNumIn, emailIn);
+   public Customer(String userTypeIn, String usernameIn, String passwordIn, int idIn, String nameIn, String addressIn, int phoneNumIn, String emailIn, String creditCardIn) {
+      super(userTypeIn, usernameIn, passwordIn, idIn, nameIn, addressIn, phoneNumIn, emailIn);
       creditCard = creditCardIn;
    }
    
