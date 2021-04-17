@@ -1,13 +1,17 @@
+import java.util.ArrayList;
+
 public class InformationSystem {
    
    protected String userType;
    protected String username;
    protected String password;
+   private InformationSystem[] userDatabase;
    
    public InformationSystem(String userTypeIn, String usernameIn, String passwordIn) {
       userType = userTypeIn;
       username = usernameIn;
       password = passwordIn;
+      userDatabase = new InformationSystem[20];
    }
    
    public String getUserType() {
@@ -22,8 +26,8 @@ public class InformationSystem {
       return password;
    }
    
-   public void login(String usernameIn, String passwordIn) {
-   
+   public boolean login(String usernameIn, String passwordIn) {
+    return false;
    }
    
    public void logout(String usernameIn, String passwordIn) {
@@ -34,7 +38,7 @@ public class InformationSystem {
    
    }
    
-   public void register() {
+   public void register(String userNameIn) {
    
    }
 }
