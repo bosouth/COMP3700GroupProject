@@ -7,9 +7,10 @@ public class LibraryISApp {
    public static void main(String args[]) {
    
       Scanner userInput = new Scanner(System.in);
+      boolean registered = false;
       
       System.out.println("Hello! Welcome to the Group 7 Library System.\n");
-      System.out.println("Are you a customer or an empoyee?");
+      System.out.println("Are you a customer or an employee?");
       
       String userType = userInput.nextLine();
       
@@ -23,12 +24,13 @@ public class LibraryISApp {
       
       InformationSystem cust = new InformationSystem(userType, username, password);
       
-      if (cust.login(username, password)) {
-         System.out.print("User is not in the system. Please register an account.");
+      //check if user is in the library database
+      if (!cust.login(username, password)) {
+         System.out.print("\nUser is not in the system. Please register an account.");
       }
-      // check if user is in the library database
       
       //if not, register
+      
       
       // user will input username and password, will be given a 4 digit Library ID
       // system will notify user of ID assignment and whenever they are ready to check out
