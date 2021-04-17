@@ -6,11 +6,26 @@ public class LibraryISApp {
 
    public static void main(String args[]) {
    
-      ArrayList<String> database = new ArrayList<String>(5);
+      Scanner userInput = new Scanner(System.in);
       
-      System.out.println("Hello! Welcome to the Group 7 Library System.");
-      System.out.println("Please enter your name and email address to get started.");
+      System.out.println("Hello! Welcome to the Group 7 Library System.\n");
+      System.out.println("Are you a customer or an empoyee?");
       
+      String userType = userInput.nextLine();
+      
+      // enter user info
+      System.out.println("Great! Now enter your username and password to get started.");
+      
+      System.out.print("Username: ");
+      String username = userInput.nextLine();
+      System.out.print("Password: ");
+      String password = userInput.nextLine();
+      
+      InformationSystem cust = new InformationSystem(userType, username, password);
+      
+      if (cust.login(username, password)) {
+         System.out.print("User is not in the system. Please register an account.");
+      }
       // check if user is in the library database
       
       //if not, register
