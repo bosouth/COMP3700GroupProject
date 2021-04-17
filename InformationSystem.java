@@ -40,19 +40,32 @@ public class InformationSystem {
    
    }
    
-   public void search() {
+   public boolean search(String usernameIn) {
    
-   }
-   
-   public boolean register(String userNameIn, String passwordIn) {
-      //if username is not in info system, return warning
-      
-      
+      for (int i = 0; i < userDatabase.length; i++) {
+         if (userDatabase[i] == null) {
+            return false;
+         }
+         else if (userDatabase[i].username == usernameIn) {
+            return true;
+         }
+      }
       return false;
    }
    
-//    public void addUser(userNameIn) {
-//       userDatabase[count] = userNameIn;
-//       count++;
-//    }
+   public boolean register(String userTypeIn, String usernameIn, String passwordIn) {
+      
+      if (this.search(usernameIn) == false) {
+         InformationSystem temp = new InformationSystem(userTypeIn, usernameIn, passwordIn);
+         
+         userDatabase[count] = temp;
+         count++;
+         return true;
+      }
+      else {
+         return false;
+      }
+   }
+   
+
 }
