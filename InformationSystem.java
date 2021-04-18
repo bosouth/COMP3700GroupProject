@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class InformationSystem {
    
@@ -7,6 +9,8 @@ public class InformationSystem {
    protected String password;
    private InformationSystem[] userDatabase;
    private int count;
+   private boolean registered;
+   private int id;
    
    public InformationSystem(String userTypeIn, String usernameIn, String passwordIn) {
       userType = userTypeIn;
@@ -14,6 +18,8 @@ public class InformationSystem {
       password = passwordIn;
       userDatabase = new InformationSystem[20];
       count = 0;
+      registered = false;
+      id = 0;
    }
    
    public String getUserType() {
@@ -28,8 +34,11 @@ public class InformationSystem {
       return password;
    }
    
-   public void setLibraryId() {
-   
+   public int setLibraryId(String usernameIn) {
+      Random rand = new Random();
+      
+      id = rand.nextInt(9999);
+      return id;
    }
    
    public boolean login(String usernameIn, String passwordIn) {
@@ -53,16 +62,27 @@ public class InformationSystem {
       return false;
    }
    
-   public boolean register(String userTypeIn, String usernameIn, String passwordIn) {
+   public boolean register() {
+      Scanner scan = new Scanner(System.in);
+      System.out.print("Enter your user type: ");
+      String userType = scan.nextLine();
+      System.out.print("Enter your username: ");
+      String username = scan.nextLine();
+      System.out.print("Enter your password: ");
+      String password = scan.nextLine();
       
-      if (this.search(usernameIn) == false) {
-         InformationSystem temp = new InformationSystem(userTypeIn, usernameIn, passwordIn);
+      if (this.search(username) == false) {
+         InformationSystem temp = new InformationSystem(userType, username, password);
+         
+         System.out.println("Success! You have successfully been registered.");
          
          userDatabase[count] = temp;
          count++;
+         
          return true;
       }
       else {
+         System.out.println("Username already exists in the database. Please try a different one.");
          return false;
       }
    }
