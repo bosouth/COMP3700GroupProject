@@ -26,14 +26,16 @@ public class LibraryISApp {
       
       //check if user is in the library database
       if (!cust.login(username, password)) {
-         System.out.print("\nUser is not in the system. Please register an account.");
+         System.out.println("\nUser is not in the system. Please register an account.\n");
+         //if not, register
+         // user will input username and password, will be given a 4 digit Library ID
+         // system will notify user of ID assignment and whenever they are ready to check out
+         if (cust.register() == true) {
+            int id = cust.setLibraryId(username);
+            System.out.println("\nYour ID is: " + id);
+            System.out.println("\nYou are ready to start checking out.");
+         }
       }
-      
-      //if not, register
-      
-      
-      // user will input username and password, will be given a 4 digit Library ID
-      // system will notify user of ID assignment and whenever they are ready to check out
       
       // user will search for an item -- syatem will notify them whether or not it is available
       
