@@ -29,10 +29,6 @@ public class Account extends InformationSystem {
       return itemsLost;
    }
    
-   public void register() {
-   
-   }
-   
    public void deactivate() {
    
    }
