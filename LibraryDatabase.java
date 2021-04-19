@@ -1,11 +1,17 @@
+import java.util.Random;
+
 public class LibraryDatabase {
 
-   protected String itemType;
-   protected String addDate;
+   private String itemType;
+   private String addDate;
+   public LibraryDatabase[] itemList;
+   private int count;
    
    public LibraryDatabase(String itemTypeIn, String addDateIn) {
       itemType = itemTypeIn;
       addDate = addDateIn;
+      itemList = new LibraryDatabase[20];
+      count = 0;
    }
    
    public String getItemType() {
@@ -17,22 +23,16 @@ public class LibraryDatabase {
    }
    
    public void add(String itemTypeIn) {
-   
+      
    }
    
    public void remove(String itemTypeIn) {
    
    }
    
-   public void edit() {
+   public void edit(String itemTypeIn) {
    
-   }
+   }   
    
-   public void search() {
    
-   }
-   
-   public int generateBarcode() {
-      return 0;
-   }
 }
