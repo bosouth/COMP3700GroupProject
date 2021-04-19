@@ -7,8 +7,8 @@ public class InformationSystem {
    protected String userType;
    protected String username;
    protected String password;
-   private InformationSystem[] userDatabase;
-   private int count;
+   private static InformationSystem[] userDatabase;
+   private static int count;
    private boolean registered;
    private int id;
    
@@ -42,21 +42,40 @@ public class InformationSystem {
    }
    
    public boolean login(String usernameIn, String passwordIn) {
-      this.initInfoSystem();
-   
-      if (this.search(usernameIn)) {
-         if (this.getPassword() != passwordIn) {
-            System.out.println("Wrong password. Try aagin.");
+      InformationSystem[] temp = initInfoSystem();
+      
+      for (InformationSystem user : temp) {
+         if (user == null) {
             return false;
          }
+         if (usernameIn.equals(user.username)) {
+            if (user.getPassword() != passwordIn) {
+               System.out.println("Wrong password. Try again.\n");
+            }
+            else {
+               return true;
+            }
+         }
          else {
-            return true;
+            System.out.println("Username doesn't exist in the system. Please register an account.\n");
          }
       }
-      else {
-         System.out.println("Username doesn't exist in the system. Please register an account.\n");
-         return false;
-      }
+      
+      return false;
+   
+//       if (this.search(usernameIn)) {
+//          if (this.getPassword() != passwordIn) {
+//             System.out.println("Wrong password. Try aagin.");
+//             return false;
+//          }
+//          else {
+//             return true;
+//          }
+//       }
+//       else {
+//          System.out.println("Username doesn't exist in the system. Please register an account.\n");
+//          return false;
+//       }
    }
    
    public void logout(String usernameIn, String passwordIn) {
@@ -67,10 +86,20 @@ public class InformationSystem {
    * returns false if username doesn't exist
    * returns true if username exists */
    public boolean search(String usernameIn) {
+      initInfoSystem();
    
-      if (this.getUsername() == usernameIn) {
-         return true;
+      for (int i = 0; i < userDatabase.length; i++) {
+         if (userDatabase[i] == null) {
+            return false;
+         }
+         if (userDatabase[i].username == usernameIn) {
+            return true;
+         }
       }
+   
+//       if (this.getUsername() == usernameIn) {
+//          return true;
+//       }
    
       return false;
    }
@@ -94,17 +123,21 @@ public class InformationSystem {
       }
    }
    
-   public void initInfoSystem() {
-      InformationSystem molly = new InformationSystem("Customer", "molly", "molly375");
+   public InformationSystem[] initInfoSystem() {
+      InformationSystem molly = new Account("Customer", "molly", "molly375", 3333);
       userDatabase[count] = molly;
       count++;
-      InformationSystem jacob = new InformationSystem("Customer", "jacob", "jacob112233");
+      InformationSystem jacob = new Account("Customer", "jacob", "jacob112233", 2345);
       userDatabase[count] = jacob;
       count++;
-      InformationSystem billy = new InformationSystem("Customer", "billy", "billy28375");
+      InformationSystem billy = new Account("Customer", "billy", "billy28375", 9375);
       userDatabase[count] = billy;
       count++;
+      
+      return userDatabase;
    }
+   
+
    
 
 }
