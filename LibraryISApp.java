@@ -3,14 +3,18 @@ import java.util.Scanner;
 
 public class LibraryISApp {
 
-
    public static void main(String args[]) {
    
-      LibraryDatabase db = new LibraryDatabase("book", "0721");
+      InventoryItem inven = new InventoryItem("sample", "0000", null, null, 0, 0);
+      Account acc = new Account(null, null, null, 0);
+      InventoryItem[] cart = new InventoryItem[10];
+      int cartCount = 0;
+      
       String code = "";
    
       Scanner userInput = new Scanner(System.in);
       boolean registered = false;
+      boolean found = false;
       
       System.out.println("Hello! Welcome to the Group 7 Library System.\n");
       System.out.println("Are you a customer or an employee?");
@@ -67,7 +71,11 @@ public class LibraryISApp {
                 if (temp.register() == true) {
                    int id = temp.setLibraryId(username);
                    System.out.println("\nYour ID is: " + id);
-                   System.out.println("\nYou are ready to start checking out.");
+                   System.out.println("\nYou are ready to start checking out.\n");
+                   acc.userType = userType;
+                   acc.username = username;
+                   acc.password = password;
+                   acc.id = id;
                    registered = true;
                 }
                   break;
@@ -77,7 +85,46 @@ public class LibraryISApp {
                break;  
          }
       } while (!code.equalsIgnoreCase("Q") && registered == false);
-      // user will search for an item -- syatem will notify them whether or not it is available
+      
+      System.out.println("Here is a list of all available items:\n\n");
+      
+      InventoryItem[] inventory = inven.initDatabase();
+      System.out.println(inven.printInventory(inventory));
+      
+      System.out.println("What would you like to do?\n"
+            + "A - add item\n"
+            + "D - delete item\n"
+            + "C - check out\n");
+
+      
+      do {
+        System.out.println("\nHere is your current cart: \n");
+        System.out.println(inven.printInventory(inven.cart));
+     
+        System.out.print("Enter Code [A, D, C]: ");
+        code = userInput.nextLine();
+        if (code.length() == 0) {
+           continue;
+        } 
+        code = code.toUpperCase();
+        char codeChar = code.charAt(0);
+
+        switch (codeChar) {
+         case 'A':
+            
+            System.out.print("Select an item to check out: ");
+            String search = userInput.nextLine();
+             
+            while (inven.found == false) {
+               inven.add(search);
+            }   
+            break;
+//          case 'D':
+          
+          default:
+            System.out.println("****Ivalid code****");
+        }
+      } while (!code.equalsIgnoreCase("Q")); 
       
       // system will notify whenever an item is added to the cart
       // system will also keep track of all transactions to make a report later. 
