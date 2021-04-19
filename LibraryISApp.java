@@ -6,6 +6,8 @@ public class LibraryISApp {
 
    public static void main(String args[]) {
    
+      LibraryDatabase db = new LibraryDatabase("book", "0721");
+   
       Scanner userInput = new Scanner(System.in);
       boolean registered = false;
       
@@ -36,6 +38,11 @@ public class LibraryISApp {
             System.out.println("\nYou are ready to start checking out.");
          }
       }
+      
+      db.initDatabase();
+      
+      System.out.print("Search for an item: ");
+      String itemType = userInput.nextLine();
       
       // user will search for an item -- syatem will notify them whether or not it is available
       
