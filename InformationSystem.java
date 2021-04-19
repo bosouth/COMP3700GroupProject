@@ -42,34 +42,41 @@ public class InformationSystem {
    }
    
    public boolean login(String usernameIn, String passwordIn) {
-    return false;
+      this.initInfoSystem();
+   
+      if (this.search(usernameIn)) {
+         if (this.getPassword() != passwordIn) {
+            System.out.println("Wrong password. Try aagin.");
+            return false;
+         }
+         else {
+            return true;
+         }
+      }
+      else {
+         System.out.println("Username doesn't exist in the system. Please register an account.\n");
+         return false;
+      }
    }
    
    public void logout(String usernameIn, String passwordIn) {
    
    }
    
+   /** searches the database for input username
+   * returns false if username doesn't exist
+   * returns true if username exists */
    public boolean search(String usernameIn) {
    
-      for (int i = 0; i < userDatabase.length; i++) {
-         if (userDatabase[i] == null) {
-            return false;
-         }
-         else if (userDatabase[i].username == usernameIn) {
-            return true;
-         }
+      if (this.getUsername() == usernameIn) {
+         return true;
       }
+   
       return false;
    }
    
    public boolean register() {
-      Scanner scan = new Scanner(System.in);
-      System.out.print("Enter your user type: ");
-      String userType = scan.nextLine();
-      System.out.print("Enter your username: ");
-      String username = scan.nextLine();
-      System.out.print("Enter your password: ");
-      String password = scan.nextLine();
+      this.initInfoSystem();
       
       if (this.search(username) == false) {
          InformationSystem temp = new InformationSystem(userType, username, password);
@@ -82,9 +89,21 @@ public class InformationSystem {
          return true;
       }
       else {
-         System.out.println("Username already exists in the database. Please try a different one.");
+         System.out.println("Username already exists in the database. Please try a different one.\n");
          return false;
       }
+   }
+   
+   public void initInfoSystem() {
+      InformationSystem molly = new InformationSystem("Customer", "molly", "molly375");
+      userDatabase[count] = molly;
+      count++;
+      InformationSystem jacob = new InformationSystem("Customer", "jacob", "jacob112233");
+      userDatabase[count] = jacob;
+      count++;
+      InformationSystem billy = new InformationSystem("Customer", "billy", "billy28375");
+      userDatabase[count] = billy;
+      count++;
    }
    
 
