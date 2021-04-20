@@ -11,9 +11,10 @@ public class InventoryItem extends LibraryDatabase {
    public boolean found;
    private int count;
    private int cartCount;
+   public double price;
    
-   public InventoryItem(String itemTypeIn, String addDateIn, String titleIn, String authorIn, int callNumIn, int barcodeIn) {
-      super(itemTypeIn, addDateIn);
+   public InventoryItem(String itemTypeIn, String avaDateIn, String titleIn, String authorIn, int callNumIn, int barcodeIn, double priceIn) {
+      super(itemTypeIn, avaDateIn);
       title = titleIn;
       author = authorIn;
       callNum = callNumIn;
@@ -22,6 +23,7 @@ public class InventoryItem extends LibraryDatabase {
       cart = new InventoryItem[20];
       count = 0;
       found = false;
+      price = priceIn;
    }
    
    public String getTitle() {
@@ -38,6 +40,10 @@ public class InventoryItem extends LibraryDatabase {
    
    public int getBarcode() {
       return barcode;
+   }
+   
+   public double getPrice() {
+      return price;
    }
    
    public void checkOut(int barcodeIn) {
@@ -82,10 +88,10 @@ public class InventoryItem extends LibraryDatabase {
    
    public InventoryItem[] initDatabase() {
    
-      InventoryItem book1 = new InventoryItem("book", "0721", "1984", "George Orwell", 000001, 395385); 
+      InventoryItem book1 = new InventoryItem("book", "0721", "1984", "George Orwell", 000001, 395385, 9.99); 
       itemList[count] = book1;
       count++;
-      InventoryItem book2 = new InventoryItem("book", "1112", "Lord of the Flies", "William Golding", 000002, 511076);
+      InventoryItem book2 = new InventoryItem("book", "1112", "Lord of the Flies", "William Golding", 000002, 511076, 13.50);
       itemList[count] = book2;
       count++;
       
@@ -103,6 +109,19 @@ public class InventoryItem extends LibraryDatabase {
          else {
             break;
          }
+      }
+      
+      return result;
+   }
+   
+   public double calculateTotalPrice(InventoryItem[] inventoryIn) {
+      double result = 0;
+   
+      for (InventoryItem item : inventoryIn) {
+         if (item == null) {
+            break;
+         }
+         result += item.price;
       }
       
       return result;
