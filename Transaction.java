@@ -1,34 +1,39 @@
+import java.util.Scanner;
+
 public class Transaction {
    
-   protected String type;
-   protected String date;
+   public double balance;
+   public boolean success;
+   private Scanner scanner = new Scanner(System.in);
    
-   public Transaction(String typeIn, String dateIn) {
-      type = typeIn;
-      date = dateIn;
+   public Transaction(double balanceIn) {
+      balance = balanceIn;
+      success = false;
    }
    
-   public String getType() {
-      return type;
+   public void setBalance() {
+      System.out.println("Set the balance of your credit card...\n");
+      this.balance = Double.parseDouble(scanner.nextLine());
    }
    
-   public String getDate() {
-      return date;
+   public double getBalance() {
+      return balance;
    }
    
-   public String checkOut() {
-      return "";
+   public void checkOut(double priceIn) {
+      System.out.println("Your current balance is $" + this.balance 
+                  + " and the price of your transaction is $" + priceIn + ".");
+                  
+      if (this.balance < priceIn) {
+         System.out.println("Insufficient funds. Remove an item.");
+      }
+      else {
+         System.out.print("Sufficient funds. Your new balance is $");
+         this.balance -= priceIn;
+         System.out.print(this.balance);
+         success = true;
+      }
    }
+      
    
-   public String checkIn() {
-      return "";
-   }
-   
-   public String payment(String typeIn) {
-      return "";
-   }  
-   
-   public String search(String typeIn) {
-      return "";
-   }
 }
