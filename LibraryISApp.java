@@ -24,7 +24,7 @@ public class LibraryISApp {
       
       String userType = userInput.nextLine();
       
-      System.out.println("Great! Here's the library menu: \n"
+      System.out.println("\nGreat! Here's the library menu: \n"
          + "L - log in\n"
          + "R - register\n"
          + "Q - quit");
@@ -113,6 +113,8 @@ public class LibraryISApp {
       do {
         System.out.println("\nHere is your current cart: \n");
         System.out.println(inven.printInventory(inven.cart));
+        System.out.println("Your current balance is $" + tran.balance 
+                  + " and the price of your current transaction is $" + inven.calculateTotalPrice(inven.cart) + ".\n");
      
         System.out.print("Enter Code [A, D, C]: ");
         code = userInput.nextLine();
@@ -139,6 +141,11 @@ public class LibraryISApp {
                System.out.print("Your current cart is: \n");
                System.out.println(inven.printInventory(inven.cart));
                totalPrice = inven.calculateTotalPrice(inven.cart);
+               if (totalPrice == 0) {
+                  System.out.println("Hmmm, seems like there is nothing in your cart...");
+                  System.out.println("Returning to menu...");
+                  break;
+               }
                tran.checkOut(totalPrice);
                              
                break;
