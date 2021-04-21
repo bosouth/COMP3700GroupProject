@@ -37,6 +37,7 @@ public class Employee extends User {
          }
       }
       
+      System.out.println("Could not find username...");
       return;
    }
    
@@ -66,8 +67,19 @@ public class Employee extends User {
       return 0;
    }
    
-   public String printReport() {
-      return "";
+   public String printReport(Account accIn, Transaction tranIn, InventoryItem[] cartIn) {
+      String result = "";
+      result += "User " + accIn.getUsername();
+      result += " has checked out: \n";
+      
+      for (InventoryItem item : cartIn) {
+         if (item == null) {
+            break;
+         }
+         result += item.getTitle() + ", by " + item.getAuthor() + "\n";
+      }
+         
+      return result;
    }
    
    public Employee[] initEmpDatabase() {
