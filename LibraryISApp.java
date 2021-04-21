@@ -8,6 +8,7 @@ public class LibraryISApp {
       InventoryItem inven = new InventoryItem("sample", "0000", null, null, 0, 0, 0);
       Account acc = new Account(null, null, null, 0);
       Customer user = new Customer(null, null, null, 0, null, null, 0, null, null);
+      Employee emp = new Employee(null, null, null, 0, null, null, 0, null);
       InventoryItem[] cart = new InventoryItem[10];
       Transaction tran = new Transaction(0.0);
       int cartCount = 0;
@@ -183,7 +184,7 @@ public class LibraryISApp {
                i++;
            }
            System.out.println("The overall price is " + overall);
-       // system will notify of anything that needs to be done before customers checking out
+       // system will notify of anything that needs to be done before checking out
 //        boolean ch = true;
 //        do {
 //            System.out.println("Please check the account information");
@@ -208,9 +209,7 @@ public class LibraryISApp {
       // system will once again notify the user whenever checkout is successful
       System.out.println("The checkout is successful");
       // user will log out
-       System.out.println("Retun to the menu or log out from system: \n"
-               + "L - log out\n"
-               + "R - return to the menu\n");
+       System.out.println("Press Q to terminate session...");
        do {
          code = userInput.nextLine();
          if (code.length() == 0) {
@@ -219,18 +218,34 @@ public class LibraryISApp {
          code = code.toUpperCase();
          char codeChar = code.charAt(0);
          switch (codeChar) {
-             case 'L':
-                 System.out.print("Log out the account");
-                 break;
-             case 'R':
-                  System.out.print("Return to the menu");
-                  break;
+             
              default:
+               System.out.println("Terminating...\n");
          }
       } while (!code.equalsIgnoreCase("Q"));
       // cue library employee to log in and print a report
      
-     System.out.println("Employee's turn...");
+     System.out.println("Employee: Please log in...");
+     
+     Employee[] empDatabase = emp.initEmpDatabase();
+     String empUsername;
+     String empPassword;
+     String empType;
+     int empId;
+     
+     while (emp.success == false) {
+      System.out.println("Enter your user type: ");
+      empType = userInput.nextLine();
+      System.out.println("Enter your username: ");
+      empUsername = userInput.nextLine();
+      System.out.println("Enter your password: ");
+      empPassword = userInput.nextLine();
+      System.out.println("Enter your library ID: ");
+      empId = userInput.nextInt();
+      emp.login(empType, empUsername, empPassword, empId, empDatabase);
+      userInput.nextLine();
+     }
+     
       
     }
 }
