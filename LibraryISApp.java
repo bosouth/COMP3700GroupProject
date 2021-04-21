@@ -183,7 +183,7 @@ public class LibraryISApp {
                i++;
            }
            System.out.println("The overall price is " + overall);
-       // system will notify of anything that needs to be done before checking out
+       // system will notify of anything that needs to be done before customers checking out
 //        boolean ch = true;
 //        do {
 //            System.out.println("Please check the account information");
