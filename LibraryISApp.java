@@ -258,12 +258,12 @@ public class LibraryISApp {
      // Also will include late fees if applicable
       
      System.out.println("What would you like tdo do? \n"
-      + "P - print report"
-      + "Q - quit");
+      + "P - print report\n"
+      + "Q - quit\n");
     
     
        do {
-           System.out.print("Enter Code [L or Q]: ");
+           System.out.print("Enter Code [P or Q]: ");
            code = userInput.nextLine();
            if (code.length() == 0) {
               continue;
@@ -274,7 +274,9 @@ public class LibraryISApp {
            switch (codeChar) {
             
             case 'P':
-               //print report
+               String report;
+               report = emp.printReport(acc, tran, inven.cart);
+               System.out.print(report);
                break;
                
             case 'Q':
