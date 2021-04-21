@@ -5,6 +5,7 @@ public class LibraryISApp {
 
    public static void main(String args[]) {
    
+      InformationSystem info = new InformationSystem(null, null, null);
       InventoryItem inven = new InventoryItem("sample", "0000", null, null, 0, 0, 0);
       Account acc = new Account(null, null, null, 0);
       Customer user = new Customer(null, null, null, 0, null, null, 0, null, null);
@@ -21,18 +22,16 @@ public class LibraryISApp {
       boolean found = false;
       
       System.out.println("Hello! Welcome to the Group 7 Library System.\n");
-      System.out.println("Are you a customer or an employee?");
       
-      String userType = userInput.nextLine();
-      
-      System.out.println("\nGreat! Here's the library menu: \n"
+      System.out.println("Library menu: \n"
          + "L - log in\n"
          + "R - register\n"
-         + "Q - quit");
+         + "Q - quit\n");
          
+      InformationSystem[] userDatabase = acc.initInfoSystem();
       
       do {
-         if (registered) {
+         if (registered || info.loginStatus) {
             break;
          }
          System.out.print("Enter Code [L, R, Q]: ");
@@ -45,35 +44,49 @@ public class LibraryISApp {
       
          switch (codeChar) {
             case 'L':
-             System.out.println("Enter your username and password to get started.");
-      
+            
+             System.out.print("Are you a customer or an employee? ");
+             String userType = userInput.nextLine();
+             if ((!userType.equalsIgnoreCase("employee")) && (!userType.equalsIgnoreCase("customer"))) {
+               System.out.println("Must be either \"customer\" or \"employee\".");
+               break;
+             }
+             System.out.println("\nEnter your username and password to get started.");
              System.out.print("Username: ");
              String username = userInput.nextLine();
              System.out.print("Password: ");
              String password = userInput.nextLine();
              
-             InformationSystem temp = new InformationSystem(userType, username, password);
+             info.login(username, password, userDatabase);
              
-             boolean loginStatus = temp.login(username, password);
-             
-             if (loginStatus == true) {
-               registered = true;
+             if (info.loginStatus == true) {
+               user.userType = userType;
+               user.username = username;
+               user.password = password;
+               acc.userType = userType;
+               acc.username = username;
+               acc.password = password;
+               user.setCreditCard();
+               tran.setBalance();
+               break;
              }
                break;
       
              case 'R':
                 System.out.print("Enter your user type: ");
                 userType = userInput.nextLine();
+                if (!userType.equalsIgnoreCase("employee") && (!userType.equalsIgnoreCase("customer"))) {
+                  System.out.println("Must be either \"customer\" or \"employee\".");
+                  break;
+                }
                 System.out.print("Enter your username: ");
                 username = userInput.nextLine();
                 System.out.print("Enter your password: ");
                 password = userInput.nextLine();
                 
-                temp = new InformationSystem(userType, username, password);
-                temp.initInfoSystem();
 
-                if (temp.register() == true) {
-                   int id = temp.setLibraryId(username);
+                if (info.register(username) == true) {
+                   int id = info.setLibraryId(username);
                    user.userType = userType;
                    user.username = username;
                    user.password = password;
@@ -100,7 +113,7 @@ public class LibraryISApp {
                System.out.println("****Invalid code****\n");
                break;  
          }
-      } while (!code.equalsIgnoreCase("Q") && registered == false);
+      } while (!code.equalsIgnoreCase("Q") && registered == false && acc.loginStatus == false);
       
       
       
@@ -117,7 +130,8 @@ public class LibraryISApp {
 
       
       do {
-        System.out.println("\nHere is your current cart: \n");
+        inven.found = false;
+        System.out.println("Here is your current cart: \n");
         System.out.println(inven.printInventory(inven.cart));
         System.out.println("Your current balance is $" + tran.balance 
                   + " and the price of your current transaction is $" + inven.calculateTotalPrice(inven.cart) + ".\n");
@@ -150,7 +164,7 @@ public class LibraryISApp {
                
          case 'C':
                
-               System.out.print("You are proceeding to checkout. Very well...\n");
+               System.out.println("You are proceeding to checkout. Very well...\n");
                System.out.print("Your current cart is: \n");
                System.out.println(inven.printInventory(inven.cart));
                totalPrice = inven.calculateTotalPrice(inven.cart);
@@ -172,48 +186,8 @@ public class LibraryISApp {
         }
       } while (!code.equalsIgnoreCase("Q") && tran.success == false); 
 
-           System.out.print("\nPlease check out the necessary information\n");
-           System.out.print("The number of item is " + cart.length + "\n");
-           int i = 0;
-           int overall = 0;
-           while(i <= cart.length) {
-               if (cart[i] == null) {
-                  break;
-               }
-               System.out.print("The " + i + " th item is " + cart[i]);
-
-               System.out.print("The available date of this item is " + cart[i].avaDate);
-               System.out.print("The price is " + cart[i].price);
-               overall += cart[i].price;
-               // once checked out, the item will be taken off the database until it is returned
-//                cart[i].state = 0; // the item have two state, one is active,which can be checkout, the other state is inactive ,which cannot be chekout
-               i++;
-           }
-           System.out.println("The overall price is " + overall);
-       // system will notify of anything that needs to be done before checking out
-//        boolean ch = true;
-//        do {
-//            System.out.println("Please check the account information");
-//            System.out.println("The User's address is " + user.address
-//                    +"\nThe User's phone number is " + user.phoneNum
-//                    + "\nThe User's email is " + user.email
-//                    + "\n Is this true or false");
-//            if(ch == false) {
-//                System.out.println("The updated address is " );
-//                String add = userInput.nextLine();
-//                user.address = add;
-//                System.out.println("The updated phone number is " );
-//                int phoneN = userInput.nextInt();
-//                user.phoneNum = phoneN;
-//                System.out.println("The updated email is ");
-//                String ema = userInput.nextLine();
-//                user.email = ema;
-//            }
-// 
-//        } while(ch == true);
-
       // system will once again notify the user whenever checkout is successful
-      System.out.println("The checkout is successful");
+      System.out.println("\nThe checkout is successful.");
       
       // user will log out
        System.out.println("Press Q to terminate session...");
@@ -227,7 +201,8 @@ public class LibraryISApp {
          switch (codeChar) {
              
              default:
-               System.out.println("Terminating...\n");
+               System.out.println("Terminating customer session...\n");
+               break;
          }
       } while (!code.equalsIgnoreCase("Q"));
       // cue library employee to log in and print a report
@@ -243,11 +218,11 @@ public class LibraryISApp {
      while (emp.success == false) {
       System.out.println("Enter your user type: ");
       empType = userInput.nextLine();
-      System.out.println("Enter your username: ");
+      System.out.print("Enter your username: ");
       empUsername = userInput.nextLine();
-      System.out.println("Enter your password: ");
+      System.out.print("Enter your password: ");
       empPassword = userInput.nextLine();
-      System.out.println("Enter your library ID: ");
+      System.out.print("Enter your library ID: ");
       empId = userInput.nextInt();
       emp.login(empType, empUsername, empPassword, empId, empDatabase);
       userInput.nextLine();
@@ -277,10 +252,11 @@ public class LibraryISApp {
                String report;
                report = emp.printReport(acc, tran, inven.cart);
                System.out.print(report);
+               System.out.println("\nReport successfully printed. Enter Q to end session.");
                break;
                
             case 'Q':
-               System.out.println("Terminating session...");
+               System.out.println("Terminating employee session...");
                System.exit(0);
                 
             default:
