@@ -257,5 +257,34 @@ public class LibraryISApp {
      // Including what he checked out and when it is due
      // Also will include late fees if applicable
       
+     System.out.println("What would you like tdo do? \n"
+      + "P - print report"
+      + "Q - quit");
+    
+    
+       do {
+           System.out.print("Enter Code [L or Q]: ");
+           code = userInput.nextLine();
+           if (code.length() == 0) {
+              continue;
+           } 
+           code = code.toUpperCase();
+        char codeChar = code.charAt(0);
+           
+           switch (codeChar) {
+            
+            case 'P':
+               //print report
+               break;
+               
+            case 'Q':
+               System.out.println("Terminating session...");
+               System.exit(0);
+                
+            default:
+               System.out.println("****Invalid code****");
+               break;
+           }
+       } while (!code.equalsIgnoreCase("Q"));
     }
 }
