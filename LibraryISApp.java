@@ -92,6 +92,10 @@ public class LibraryISApp {
                 }
                   break;
                
+            case 'Q':
+               System.out.println("Terminating session...");
+               System.exit(0);
+            
             default:
                System.out.println("****Invalid code****\n");
                break;  
@@ -108,7 +112,8 @@ public class LibraryISApp {
       System.out.println("What would you like to do?\n"
             + "A - add item\n"
             + "D - delete item\n"
-            + "C - check out\n");
+            + "C - check out\n"
+            + "Q - terminate session\n");
 
       
       do {
@@ -117,7 +122,7 @@ public class LibraryISApp {
         System.out.println("Your current balance is $" + tran.balance 
                   + " and the price of your current transaction is $" + inven.calculateTotalPrice(inven.cart) + ".\n");
      
-        System.out.print("Enter Code [A, D, C]: ");
+        System.out.print("Enter Code [A, D, C, or Q]: ");
         code = userInput.nextLine();
         if (code.length() == 0) {
            continue;
@@ -136,6 +141,13 @@ public class LibraryISApp {
             }   
             break;
             
+         case 'D':
+               System.out.print("Select an item to delete: ");
+               search = userInput.nextLine();
+               
+               inven.remove(search, inven.cart);
+               break;
+               
          case 'C':
                
                System.out.print("You are proceeding to checkout. Very well...\n");
@@ -150,21 +162,15 @@ public class LibraryISApp {
                tran.checkOut(totalPrice);
                              
                break;
+               
+          case 'Q': 
+            System.out.println("Terminating session...");
+            System.exit(0);
+          
           default:
             System.out.println("****Ivalid code****");
         }
       } while (!code.equalsIgnoreCase("Q") && tran.success == false); 
-      
-       // system will notify whenever an item is added to the cart
-//        if(cart.contains(search)) {
-//            System.out.print("This item is added to the cart");
-//        }
-//        else {
-//            System.out.print("This item is not added to the cart");
-//        }
-      // system will also keep track of all transactions to make a report later. 
-      
-      // user will proceed to check out -- all necessary conditions will be checked first
 
            System.out.print("\nPlease check out the necessary information\n");
            System.out.print("The number of item is " + cart.length + "\n");
@@ -208,6 +214,7 @@ public class LibraryISApp {
 
       // system will once again notify the user whenever checkout is successful
       System.out.println("The checkout is successful");
+      
       // user will log out
        System.out.println("Press Q to terminate session...");
        do {
@@ -246,6 +253,9 @@ public class LibraryISApp {
       userInput.nextLine();
      }
      
+     //Employee prints a report of employee transaction
+     // Including what he checked out and when it is due
+     // Also will include late fees if applicable
       
     }
 }
