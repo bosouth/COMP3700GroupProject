@@ -9,6 +9,7 @@ public class InventoryItem extends LibraryDatabase {
    public InventoryItem[] itemList;
    public InventoryItem[] cart;
    public boolean found;
+   public boolean removed;
    private int count;
    private int cartCount;
    public double price;
@@ -23,6 +24,7 @@ public class InventoryItem extends LibraryDatabase {
       cart = new InventoryItem[20];
       count = 0;
       found = false;
+      removed = false;
       price = priceIn;
    }
    
@@ -68,8 +70,31 @@ public class InventoryItem extends LibraryDatabase {
    
    }
    
-   public void remove(String titleIn) {
-   
+   public void remove(String titleIn, InventoryItem[] cartIn) {
+      int index = 0;
+      
+      if (cartIn[0] == null) {
+         System.out.println("Seems there is nothing in your cart...:");
+         removed = false;
+         return;
+      }
+      
+      for (InventoryItem item : cartIn) {
+         if (item == null) {
+            System.out.println("Could not find item...");
+            removed = false;
+            return;
+         }
+         if (titleIn.equals(item.getTitle())) {
+            System.out.println("Item successfully removed.");
+            cartIn[index] = null;
+            cartCount--;
+            removed = true;
+            return;
+         }
+         index++;  
+      }
+         
    }
    
    public InventoryItem search(String titleIn) {
