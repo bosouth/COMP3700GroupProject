@@ -7,6 +7,7 @@ public class LibraryDatabase {
    public LibraryDatabase[] itemList;
    private int count;
    
+   // constructor for LibraryDatabase
    public LibraryDatabase(String itemTypeIn, String avaDateIn) {
       itemType = itemTypeIn;
       avaDate = avaDateIn;
@@ -14,25 +15,13 @@ public class LibraryDatabase {
       count = 0;
    }
    
+   // returns item type for item
    public String getItemType() {
       return itemType;
    }
    
+   // returns due date for item
    public String getAvaDate() {
       return avaDate;
    }
-   
-   public void add(String itemTypeIn) {
-      
-   }
-   
-   public void remove(String itemTypeIn) {
-   
-   }
-   
-   public void edit(String itemTypeIn) {
-   
-   }   
-   
-   
 }
