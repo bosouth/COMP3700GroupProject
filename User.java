@@ -6,16 +6,7 @@ public class User extends InformationSystem{
     protected int phoneNum;
     protected String email;
     
-    public static void main(String args[]) {
-
-        System.out.println("Hello World");
-    }
-    
-    public boolean verifyAcct(int id, String name) {
-      
-      return false;
-    }
-    
+    // constructor for User
     public User(String userTypeIn, String userNameIn, String passwordIn, int idIn, String nameIn, String addressIn, int phoneNumIn, String emailIn) {
       super(userTypeIn, userNameIn, passwordIn);
       id = idIn;
@@ -25,18 +16,27 @@ public class User extends InformationSystem{
       email = emailIn;
     }
     
+    // returns id for user
+    public int getId() {
+      return id;
+    }
+    
+    // returns name for user
     public String getName() {
       return name;
     }
     
+    // returns address for user
     public String getAddress() {
       return address;
     }
     
+    // returns phone number for user
     public int getPhoneNum() {
       return phoneNum;
     }
     
+    // returns email address for user
     public String getEmail() {
       return email;
     }
