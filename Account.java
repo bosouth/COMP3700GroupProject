@@ -2,23 +2,18 @@ public class Account extends InformationSystem {
 
    public int id;
     
+   // constructor of the Account class
    public Account(String userTypeIn, String usernameIn, String passwordIn, int idIn) {
       super(userTypeIn, usernameIn, passwordIn);
       id = idIn;
    }
    
+   // returns id of the user
    public int getId() {
       return id;
    }   
-      
-   public void deactivate() {
-   
-   }
-   
-   public void edit() {
-   
-   }
-   
+    
+   // initialize information system with several users  
    public InformationSystem[] initInfoSystem() {
       Account molly = new Account("Customer", "molly", "molly375", 3333);
       userDatabase[infoCount] = molly;
