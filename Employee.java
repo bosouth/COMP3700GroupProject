@@ -75,10 +75,9 @@ public class Employee extends User {
             break;
          }
          result += item.getTitle() + ", by " + item.getAuthor() + " on " + currentDate + "\n";
-         result += item.getTitle() + "'s due date is " + item.getAvaDate() + "\n"; 
-         result += "User's current overdue late fee is: $" + tranIn.calculateFee() + "\n";
+         result += item.getTitle() + "'s due date is " + item.getAvaDate() + "\n\n"; 
       }
-         
+         result += "User's current overdue late fee is: $" + tranIn.calculateFee() + "\n";
       return result;
    }
    
