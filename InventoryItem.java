@@ -14,6 +14,7 @@ public class InventoryItem extends LibraryDatabase {
    private int cartCount;
    public double price;
    
+   // constructor of InventoryItem
    public InventoryItem(String itemTypeIn, String avaDateIn, String titleIn, String authorIn, int callNumIn, int barcodeIn, double priceIn) {
       super(itemTypeIn, avaDateIn);
       title = titleIn;
@@ -28,34 +29,32 @@ public class InventoryItem extends LibraryDatabase {
       price = priceIn;
    }
    
+   // returns the title of the given item
    public String getTitle() {
     return title;
    }
    
+   // returns the author of given item
    public String getAuthor() {
       return author;
    }
    
+   // returns call number of given type 
    public int getCallNum() {
       return callNum;
    }
    
+   // returns barcode of given item
    public int getBarcode() {
       return barcode;
    }
    
+   // returns price of given item
    public double getPrice() {
       return price;
    }
    
-   public void checkOut(int barcodeIn) {
-      
-   }
-   
-   public void checkIn(int barcodeIn) {
-   
-   }
-   
+   // add an item to the cart
    public void add(String titleIn) {
       Scanner userInput = new Scanner(System.in);
       cart[cartCount] = this.search(titleIn);       
@@ -70,6 +69,7 @@ public class InventoryItem extends LibraryDatabase {
    
    }
    
+   // removes an item from the cart
    public void remove(String titleIn, InventoryItem[] cartIn) {
       int index = 0;
       
@@ -90,6 +90,7 @@ public class InventoryItem extends LibraryDatabase {
             cartIn[index] = null;
             cartCount--;
             removed = true;
+            shiftLeft(cartIn);
             return;
          }
          index++;  
@@ -97,13 +98,14 @@ public class InventoryItem extends LibraryDatabase {
          
    }
    
+   // searches for an item in the current inventory
    public InventoryItem search(String titleIn) {
       for (InventoryItem item : itemList) {
          if (item == null) {
             return null;
          }
          if (item.getTitle().equals(titleIn)) {
-            System.out.println("Item added to cart.");
+            System.out.println("Item added to cart.\n");
             found = true;
             return item;
          }
@@ -111,6 +113,7 @@ public class InventoryItem extends LibraryDatabase {
       return null;
    }
    
+   // initializes the library database for items to check out
    public InventoryItem[] initDatabase() {
    
       InventoryItem book1 = new InventoryItem("book", "0721", "1984", "George Orwell", 000001, 395385, 9.99); 
@@ -123,7 +126,7 @@ public class InventoryItem extends LibraryDatabase {
       return itemList;
    }
 
-   
+   // prints the inventory in question in String format
    public String printInventory(InventoryItem[] inventoryIn) {
       String result = "";
    
@@ -139,6 +142,7 @@ public class InventoryItem extends LibraryDatabase {
       return result;
    }
    
+   // calculate total price of the cart
    public double calculateTotalPrice(InventoryItem[] inventoryIn) {
       double result = 0;
    
@@ -151,4 +155,26 @@ public class InventoryItem extends LibraryDatabase {
       
       return result;
    }
+   
+   // mainly used by the delete() method. Used for organization
+   public static void shiftLeft(InventoryItem[] itemIn) {
+      int i = 0;
+   
+      for (i = 0; i < itemIn.length; i++) {
+         if (itemIn[i] == null) {
+            if (itemIn[i + 1] == null) {
+               return;
+            }
+            else {
+               break;
+            }
+         }
+         
+      }
+      
+      while (itemIn[i + 1] != null) {
+         itemIn[i] = itemIn[i + 1];
+         itemIn[i + 1] = null;
+      }
+   }  
 }
