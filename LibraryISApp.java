@@ -1,10 +1,21 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/** COMP 3700-002
+* Group 7 Project
+*
+*
+* This class is the driver class that will perform all necessary computations
+* and calculations for the Library Information System . */
 public class LibraryISApp {
-
+   
+   /** main method of the LibraryISApp */
    public static void main(String args[]) {
    
+      /////////////////////////////////
+      ////  OBJECT INITIALIZATIONS ////
+      /////////////////////////////////
+      
       InformationSystem info = new InformationSystem(null, null, null);
       InventoryItem inven = new InventoryItem("sample", "0000", null, null, 0, 0, 0);
       Account acc = new Account(null, null, null, 0);
@@ -12,24 +23,27 @@ public class LibraryISApp {
       Employee emp = new Employee(null, null, null, 0, null, null, 0, null);
       InventoryItem[] cart = new InventoryItem[10];
       Transaction tran = new Transaction(0.0);
+      InformationSystem[] userDatabase = acc.initInfoSystem();
+
+      
+      //// variables ////
+      
       int cartCount = 0;
       double totalPrice = 0;
-      
       String code = "";
-   
       Scanner userInput = new Scanner(System.in);
       boolean registered = false;
       boolean found = false;
       
-      System.out.println("Hello! Welcome to the Group 7 Library System.\n");
+      /* Start */
       
+      System.out.println("Hello! Welcome to the Group 7 Library System.\n");
       System.out.println("Library menu: \n"
          + "L - log in\n"
          + "R - register\n"
          + "Q - quit\n");
-         
-      InformationSystem[] userDatabase = acc.initInfoSystem();
-      
+       
+      /* cue login/register sequence */
       do {
          if (registered || info.loginStatus) {
             break;
@@ -43,10 +57,13 @@ public class LibraryISApp {
          char codeChar = code.charAt(0);
       
          switch (codeChar) {
+            // case to log in
             case 'L':
             
              System.out.print("Are you a customer or an employee? ");
              String userType = userInput.nextLine();
+             
+             // will break if not either customer or employee
              if ((!userType.equalsIgnoreCase("employee")) && (!userType.equalsIgnoreCase("customer"))) {
                System.out.println("Must be either \"customer\" or \"employee\".");
                break;
@@ -59,6 +76,7 @@ public class LibraryISApp {
              
              info.login(username, password, userDatabase);
              
+             // will set relevant data if login is successful
              if (info.loginStatus == true) {
                user.userType = userType;
                user.username = username;
@@ -71,10 +89,13 @@ public class LibraryISApp {
                break;
              }
                break;
-      
+               
+             // case to register
              case 'R':
                 System.out.print("Enter your user type: ");
                 userType = userInput.nextLine();
+                
+                // will break if not either customer or employee
                 if (!userType.equalsIgnoreCase("employee") && (!userType.equalsIgnoreCase("customer"))) {
                   System.out.println("Must be either \"customer\" or \"employee\".");
                   break;
@@ -84,7 +105,7 @@ public class LibraryISApp {
                 System.out.print("Enter your password: ");
                 password = userInput.nextLine();
                 
-
+                // will set relevant data if registration is successful
                 if (info.register(username) == true) {
                    int id = info.setLibraryId(username);
                    user.userType = userType;
@@ -104,7 +125,8 @@ public class LibraryISApp {
                    registered = true;
                 }
                   break;
-               
+            
+            // exit out of the program entirely   
             case 'Q':
                System.out.println("Terminating session...");
                System.exit(0);
@@ -115,10 +137,10 @@ public class LibraryISApp {
          }
       } while (!code.equalsIgnoreCase("Q") && registered == false && acc.loginStatus == false);
       
-      
-      
+      // cue checkout sequence
       System.out.println("Here is a list of all available items:\n\n");
       
+      // print inventory
       InventoryItem[] inventory = inven.initDatabase();
       System.out.println(inven.printInventory(inventory));
       
@@ -145,23 +167,28 @@ public class LibraryISApp {
         char codeChar = code.charAt(0);
 
         switch (codeChar) {
+        
+         // case to add item to cart
          case 'A':
             
             System.out.print("Select an item to check out: ");
             String search = userInput.nextLine();
-             
+            
+            // will break if item not found 
             while (inven.found == false) {
                inven.add(search);
             }   
             break;
-            
+          
+         // case to delete item from cart  
          case 'D':
                System.out.print("Select an item to delete: ");
                search = userInput.nextLine();
                
                inven.remove(search, inven.cart);
                break;
-               
+          
+         // case to check out     
          case 'C':
                
                System.out.println("You are proceeding to checkout. Very well...\n");
@@ -174,9 +201,9 @@ public class LibraryISApp {
                   break;
                }
                tran.checkOut(totalPrice);
-                             
                break;
-               
+          
+          // case to exit system entirely     
           case 'Q': 
             System.out.println("Terminating session...");
             System.exit(0);
@@ -205,16 +232,19 @@ public class LibraryISApp {
                break;
          }
       } while (!code.equalsIgnoreCase("Q"));
+      
       // cue library employee to log in and print a report
      
      System.out.println("Employee: Please log in...");
      
+     // initialize employee variables
      Employee[] empDatabase = emp.initEmpDatabase();
      String empUsername;
      String empPassword;
      String empType;
      int empId;
      
+     // sequence to log in to employee account
      while (emp.success == false) {
       System.out.println("Enter your user type: ");
       empType = userInput.nextLine();
@@ -248,13 +278,15 @@ public class LibraryISApp {
            
            switch (codeChar) {
             
+            // case to print report
             case 'P':
                String report;
                report = emp.printReport(acc, tran, inven.cart);
                System.out.print(report);
                System.out.println("\nReport successfully printed. Enter Q to end session.");
                break;
-               
+             
+            // case to exit session  
             case 'Q':
                System.out.println("Terminating employee session...");
                System.exit(0);
