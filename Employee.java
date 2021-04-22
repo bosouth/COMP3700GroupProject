@@ -1,9 +1,13 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Employee extends User {
 
    public Employee[] empList;
    public int empCount;
    public boolean success;
-
+   
+   // constructor of Employee
    public Employee(String userTypeIn, String usernameIn, String passwordIn, int idIn, String nameIn, String addressIn, int phoneNumIn, String emailIn) {
       super(userTypeIn, usernameIn, passwordIn, idIn, nameIn, addressIn, phoneNumIn, emailIn);
       empList = new Employee[20];
@@ -11,8 +15,8 @@ public class Employee extends User {
       success = false;
    } 
    
+   // makes sure that username exists in empListIn and that the password and id match
    public void login(String userTypeIn, String usernameIn, String passwordIn, int idIn, Employee[] empListIn) {
-      
       
       for (Employee emp : empListIn) {
          if (emp == null) {
@@ -41,6 +45,7 @@ public class Employee extends User {
       return;
    }
    
+   // searches for specifc user in the employee database
    public boolean search(String usernameIn) {
       initEmpDatabase();
    
@@ -55,19 +60,12 @@ public class Employee extends User {
       return false;
    }
    
-   public String addItem(String itemIn) {
-      return "";
-   }
-   
-   public int checkIn(int barcodeIn) {
-      return 0;
-   }
-   
-   public int checkOut(int barcodeIn) {
-      return 0;
-   }
-   
+   // prints thecustomer report in string form
    public String printReport(Account accIn, Transaction tranIn, InventoryItem[] cartIn) {
+      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMdd");
+      LocalDateTime now = LocalDateTime.now();
+      String currentDate = dtf.format(now);
+      
       String result = "";
       result += "User " + accIn.getUsername();
       result += " has checked out: \n";
@@ -76,12 +74,15 @@ public class Employee extends User {
          if (item == null) {
             break;
          }
-         result += item.getTitle() + ", by " + item.getAuthor() + "\n";
+         result += item.getTitle() + ", by " + item.getAuthor() + " on " + currentDate + "\n";
+         result += item.getTitle() + "'s due date is " + item.getAvaDate() + "\n"; 
+         result += "User's current overdue late fee is: $" + tranIn.calculateFee() + "\n";
       }
          
       return result;
    }
    
+   // initialize the employee account database
    public Employee[] initEmpDatabase() {
       Employee bart = new Employee("employee", "bart", "bart330", 1324, "Bart Smith", "102 Bart Lane", 4376849, "bart330@bart.com");
       empList[empCount] = bart;
